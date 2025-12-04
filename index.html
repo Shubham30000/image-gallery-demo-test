@@ -1,1 +1,108 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Responsive Image Gallery</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"></head><body class="bg-gray-100 font-sans antialiased"><header class="bg-white shadow-md py-4"><div class="container mx-auto px-4"><h1 class="text-3xl font-bold text-gray-800 text-center">My Responsive Image Gallery</h1></div></header><main class="container mx-auto px-4 py-8"><section class="mb-8"><h2 class="text-2xl font-semibold text-gray-700 mb-4">Gallery Showcase</h2><div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"><div class="relative group cursor-pointer bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"><img src="sample.png" alt="An abstract red image" class="w-full h-48 object-cover image-item"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white text-lg font-semibold">View Image</span></div></div><div class="relative group cursor-pointer bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"><img src="sample.png" alt="A vibrant red color field" class="w-full h-48 object-cover image-item"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white text-lg font-semibold">View Image</span></div></div><div class="relative group cursor-pointer bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"><img src="sample.png" alt="Solid red background" class="w-full h-48 object-cover image-item"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white text-lg font-semibold">View Image</span></div></div><div class="relative group cursor-pointer bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"><img src="sample.png" alt="Simple red image" class="w-full h-48 object-cover image-item"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white text-lg font-semibold">View Image</span></div></div></div></section></main><div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4"><div class="relative bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-auto"><button class="absolute top-2 right-2 text-gray-800 hover:text-gray-900 text-3xl font-bold p-2 leading-none" id="close-modal">&times;</button><img id="modal-image" src="" alt="Full size image" class="w-full h-auto object-contain rounded-lg"><p id="modal-image-caption" class="p-4 text-center text-gray-700"></p></div></div><script>document.addEventListener('DOMContentLoaded', () => {const galleryImages = document.querySelectorAll('.image-item');const imageModal = document.getElementById('image-modal');const modalImage = document.getElementById('modal-image');const modalImageCaption = document.getElementById('modal-image-caption');const closeModalBtn = document.getElementById('close-modal');galleryImages.forEach(img => {img.parentElement.addEventListener('click', () => {modalImage.src = img.src;modalImage.alt = img.alt;modalImageCaption.textContent = img.alt;imageModal.classList.remove('hidden');});});closeModalBtn.addEventListener('click', () => {imageModal.classList.add('hidden');});imageModal.addEventListener('click', (e) => {if (e.target === imageModal) {imageModal.classList.add('hidden');}});document.addEventListener('keydown', (e) => {if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {imageModal.classList.add('hidden');}});});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        .hidden { display: none; }
+        .gallery-item { margin: 10px; border: 1px solid #ccc; padding: 5px; display: inline-block; vertical-align: top; }
+        .gallery-item img { max-width: 150px; height: auto; display: block; margin-bottom: 5px; }
+        #gallery-search { margin-bottom: 15px; padding: 8px; width: 300px; border: 1px solid #ddd; border-radius: 4px; }
+        #image-count { font-weight: bold; margin-left: 10px; }
+        body { font-family: sans-serif; padding: 20px; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+
+    <div>
+        <label for="gallery-search">Search Images:</label>
+        <input type="text" id="gallery-search" placeholder="Filter by filename...">
+        <span>Visible Images: <span id="image-count">0</span></span>
+    </div>
+
+    <div id="image-gallery">
+        <div class="gallery-item">
+            <img src="images/mountain-landscape.jpg" alt="Mountain Landscape">
+            <span>mountain-landscape.jpg</span>
+        </div>
+        <div class="gallery-item">
+            <img src="images/city-night.png" alt="Cityscape Night">
+            <span>city-night.png</span>
+        </div>
+        <div class="gallery-item">
+            <img src="images/forest-path.jpeg" alt="Forest Path">
+            <span>forest-path.jpeg</span>
+        </div>
+        <div class="gallery-item">
+            <img src="images/happy-dog.gif" alt="Happy Dog">
+            <span>happy-dog.gif</span>
+        </div>
+        <div class="gallery-item">
+            <img src="images/sleeping-cat.webp" alt="Sleeping Cat">
+            <span>sleeping-cat.webp</span>
+        </div>
+        <div class="gallery-item">
+            <img src="images/abstract-art.svg" alt="Abstract Art">
+            <span>abstract-art.svg</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('gallery-search');
+            const imageGallery = document.getElementById('image-gallery');
+            const imageItems = imageGallery.querySelectorAll('.gallery-item');
+            const imageCountSpan = document.getElementById('image-count');
+
+            function updateImageCount() {
+                let visibleCount = 0;
+                imageItems.forEach(item => {
+                    if (!item.classList.contains('hidden')) {
+                        visibleCount++;
+                    }
+                });
+                imageCountSpan.textContent = visibleCount;
+            }
+
+            // Initial count update
+            updateImageCount();
+
+            searchInput.addEventListener('input', (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+                let currentVisibleCount = 0;
+
+                imageItems.forEach(item => {
+                    const img = item.querySelector('img');
+                    const src = img.src;
+                    
+                    // Extract filename from src, handling paths, query parameters, and hash
+                    let fullFilename = src.substring(src.lastIndexOf('/') + 1);
+                    fullFilename = fullFilename.substring(fullFilename.lastIndexOf('\\') + 1); // For Windows paths
+                    
+                    const queryParamIndex = fullFilename.indexOf('?');
+                    if (queryParamIndex !== -1) {
+                        fullFilename = fullFilename.substring(0, queryParamIndex);
+                    }
+                    const hashIndex = fullFilename.indexOf('#');
+                    if (hashIndex !== -1) {
+                        fullFilename = fullFilename.substring(0, hashIndex);
+                    }
+                    
+                    fullFilename = fullFilename.toLowerCase();
+
+                    if (fullFilename.includes(searchTerm)) {
+                        item.classList.remove('hidden');
+                        currentVisibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                imageCountSpan.textContent = currentVisibleCount;
+            });
+        });
+    </script>
+</body>
+</html>
